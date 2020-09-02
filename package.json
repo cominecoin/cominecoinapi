@@ -1,0 +1,23 @@
+{
+  "name": "cominecoin",
+  "version": "1.0.0",
+  "description": "comine coin api - www.cominecoin.com",
+  "main": "cominecoin.js",
+  "scripts": {
+    "test": "createwallet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "www.github.com/cominecoin/cominecoinapi"
+  },
+  "keywords": [
+    "comine",
+    "cominecoin",
+    "cominecoin",
+    "api",
+    "comine",
+    "api"
+  ],
+  "author": "cominecoin",
+  "license": "ISC"
+}
