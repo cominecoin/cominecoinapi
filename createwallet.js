@@ -2,52 +2,69 @@ var https = require('https');
 
 const fs = require('fs');
 
-jsonObject = JSON.stringify({
-    "PrivateKey": "",
-    "PublicKey": "",
-    "CryptoAsset": "Comine",
-    "Identifier": ""
-});
+const path = 'wallet.dat'
+const outputtext = 'Wallet already exists!';
 
-var postheaders = {
-    'Content-Type': 'application/json',
-    'Content-Length': Buffer.byteLength(jsonObject, 'utf8')
-};
+try {
+    if (!fs.existsSync(path)) {
 
-var optionspost = {
-    host: 'www.cominecoin.com',
-    path: '/api/cryptoasset10',
-    method: 'POST',
-    headers: postheaders
-};
+        //Create a wallet
 
-console.info('Options prepared:');
-console.info(optionspost);
-console.info('Do the POST call');
+        jsonObject = JSON.stringify({
+            "PrivateKey": "",
+            "PublicKey": "",
+            "CryptoAsset": "Comine",
+            "Identifier": ""
+        });
 
-// do the POST call
-var reqPost = https.request(optionspost, function (res) {
-    console.log("statusCode: ", res.statusCode);
+        var postheaders = {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(jsonObject, 'utf8')
+        };
 
-    res.on('data', function (d) {
-        console.info('POST result:\n');
+        var optionspost = {
+            host: 'www.cominecoin.com',
+            path: '/api/cryptoasset10',
+            method: 'POST',
+            headers: postheaders
+        };
 
-        process.stdout.write(d);
-        //add wallet file  //d.PublicKey + '\n' + d.PrivateKey
-        fs.writeFile("wallet.dat", d , function (err) {
-            if (err) {
-                return console.log(err);
-            }
-            console.log("Wallet file was created!");
-        }); 
-        console.info('\n\nPOST completed');
-    });
-});
+        console.info('Options prepared:');
+        console.info(optionspost);
+        console.info('Do the POST call');
 
-// write the json data
-reqPost.write(jsonObject);
-reqPost.end();
+        // do the POST call
+        var reqPost = https.request(optionspost, function (res) {
+            console.log("statusCode: ", res.statusCode);
 
-reqPost.on('error', function (e) {
-    console.error(e);
-});
+            res.on('data', function (d) {
+                console.info('POST result:\n');
+
+                process.stdout.write(d);
+                //add wallet file  //d.PublicKey + '\n' + d.PrivateKey
+                fs.writeFile("wallet.dat", d, function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    console.log("Wallet file was created!");
+                });
+                console.info('\n\nPOST completed');
+            });
+        });
+
+        // write the json data
+        reqPost.write(jsonObject);
+        reqPost.end();
+
+        reqPost.on('error', function (e) {
+            console.error(e);
+        });
+
+    }
+    else {
+        console.log(outputtext);
+    }
+
+} catch (err) {
+    console.log(outputtext);
+}

@@ -1,6 +1,6 @@
 {
   "name": "cominecoin",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "comine coin api - www.cominecoin.com",
   "main": "cominecoin.js",
   "scripts": {
@@ -19,5 +19,6 @@
     "api"
   ],
   "author": "cominecoin",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {}
 }
